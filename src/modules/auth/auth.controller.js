@@ -20,4 +20,14 @@ const login = async (req, res, next) => {
     }
 };
 
-module.exports = { register, login };
+const googleLogin = async (req, res, next) => {
+    try {
+        const { idToken } = req.body;
+        const { user, token } = await authService.googleLogin({ idToken });
+        res.status(200).json({ user, token });
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports = { register, login, googleLogin };
