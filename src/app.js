@@ -9,6 +9,7 @@ const productRoute = require('./modules/product/product.route');
 const orderRoute = require('./modules/order/order.route');
 
 const app = express();
+const notificationRoute = require('./models/notification/notification.route');
 
 app.use(helmet());
 app.use(cors());
@@ -23,5 +24,5 @@ app.use('/api/products', productRoute);
 app.use('/api/orders', orderRoute);
 
 app.use(errorMiddleware);
-
+app.use('/api/notifications', notificationRoute);
 module.exports = app;

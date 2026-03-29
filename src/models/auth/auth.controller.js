@@ -30,5 +30,12 @@ const googleLogin = async (req, res, next) => {
         next(err);
     }
 };
-
-module.exports = { register, login, googleLogin };
+//thong tin ca nhan
+const getMe = async (req, res, next) => {
+    try {
+        res.status(200).json(req.user);
+    } catch (err) {
+        next(err);
+    }
+};
+module.exports = { register, login, googleLogin, getMe };
