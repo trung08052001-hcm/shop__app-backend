@@ -1,25 +1,16 @@
-{
-  "type": "Compass Connections",
-  "version": {
-    "$numberInt": "1"
-  },
-  "connections": [
-    {
-      "id": "3516e0ea-3523-43c4-bce2-e48c2013bbdd",
-      "lastUsed": {
-        "$date": {
-          "$numberLong": "1774972907392"
-        }
-      },
-      "favorite": {
-        "name": "",
-        "color": "color3"
-      },
-      "savedConnectionType": "recent",
-      "connectionOptions": {
-        "connectionString": "mongodb://localhost:27017/",
-        "oidc": {}
-      }
-    }
-  ]
-}
+engraving : điêu khắc
+continent : lục địa 
+pastoralist : dân mu mục
+ancestor :  tổ tiên
+site : khu vực 
+image : hình ảnh
+varied = different : khác nhau 
+extraordinary : ngoạn mục phi thường
+ancestral : cổ đại
+exception : ngoại lệ
+cattle : gia súc 
+religious : thuộc về tôn giáo
+spiritual : thuộc tâm linh adj
+strengthen : củng cố 
+ancient : cổ xưa
+origin : nguồn gốc 
