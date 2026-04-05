@@ -1,4 +1,5 @@
 const authService = require('./auth.service');
+const User = require('../../models/user.model');
 
 const register = async (req, res, next) => {
     try {
@@ -44,4 +45,35 @@ const getMe = async (req, res, next) => {
     }
 };
 
-module.exports = { register, login, googleLogin, getMe };
+const getAllUsers = async (req, res, next) => {
+    try {
+        const users = await User.find().select('-password').sort({ createdAt: -1 });
+        res.status(200).json(users);
+    } catch (err) {
+        next(err);
+    }
+};
+
+const updateUserRole = async (req, res, next) => {
+    try {
+        const { role } = req.body;
+        const user = await User.findByIdAndUpdate(
+            req.params.id,
+            { role },
+            { new: true }
+        ).select('-password');
+
+        res.status(200).json(user);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports = {
+    register,
+    login,
+    googleLogin,
+    getMe,
+    getAllUsers,
+    updateUserRole,
+};
