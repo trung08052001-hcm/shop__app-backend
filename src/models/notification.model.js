@@ -2,18 +2,25 @@ const mongoose = require('mongoose');
 
 const notificationSchema = new mongoose.Schema(
     {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
         title: { type: String, required: true },
         body: { type: String, required: true },
         type: {
             type: String,
-            enum: ['promotion', 'event', 'sale', 'new_product'],
-            default: 'promotion',
+            enum: ['order_placed', 'order_updated', 'promotion'],
+            default: 'order_placed',
         },
-        discount: { type: Number, default: null }, // % giảm giá nếu có
-        imageUrl: { type: String, default: null },
-        isActive: { type: Boolean, default: true },
-        startAt: { type: Date, default: Date.now },
-        endAt: { type: Date, default: null },
+        orderId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Order',
+            default: null,
+        },
+        isRead: { type: Boolean, default: false },
+        fcmToken: { type: String, default: null },
     },
     { timestamps: true }
 );

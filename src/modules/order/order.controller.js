@@ -1,14 +1,24 @@
 const Order = require('../../models/order.model');
 
+const { createNotification } = require('../../services/notification.service');
+
 const createOrder = async (req, res, next) => {
     try {
         const { items, totalPrice, shippingAddress } = req.body;
-
         const order = await Order.create({
             user: req.user._id,
             items,
             totalPrice,
             shippingAddress,
+        });
+
+        // Tạo notification sau khi tạo order
+        await createNotification({
+            userId: req.user._id,
+            title: 'Đặt hàng thành công!',
+            body: `Đơn hàng #${order._id.toString().slice(-6).toUpperCase()} đã được xác nhận. Tổng tiền: ${totalPrice.toLocaleString('vi-VN')}đ`,
+            type: 'order_placed',
+            orderId: order._id,
         });
 
         res.status(201).json(order);
@@ -86,10 +96,27 @@ const updateOrderStatus = async (req, res, next) => {
             req.params.id,
             { status },
             { new: true }
-        );
-        if (!order) {
-            return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+        ).populate('user', '_id fcmToken');
+
+        if (!order) return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+
+        const statusMessages = {
+            processing: 'Đơn hàng đang được xử lý',
+            shipped: 'Đơn hàng đang được giao đến bạn',
+            delivered: 'Đơn hàng đã được giao thành công',
+            cancelled: 'Đơn hàng đã bị huỷ',
+        };
+
+        if (statusMessages[status]) {
+            await createNotification({
+                userId: order.user._id,
+                title: statusMessages[status],
+                body: `Đơn hàng #${order._id.toString().slice(-6).toUpperCase()}`,
+                type: 'order_updated',
+                orderId: order._id,
+            });
         }
+
         res.json(order);
     } catch (err) {
         next(err);

@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
         phone: { type: String, trim: true, default: null },
         avatar: { type: String, default: null },
         role: { type: String, enum: ['user', 'admin'], default: 'user' },
+        fcmToken: { type: String, default: null },
     },
     { timestamps: true }
 );
