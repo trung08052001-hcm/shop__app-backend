@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Nguyễn Văn A",
+        "email": "vana@gmail.com",
+        "password": "$2b$12$X1nsj0yrsZsB0e9O61pKae0zgrGfR470qsnmNGcQljJeqp9ZxS086",
+        "address": "Hà Nội",
+        "phone": "0901234567",
+        "avatar": "https://i.pravatar.cc/150?u=1",
+        "role": "user",
+        "createdAt": {
+            "$date": "2024-04-12T10:00:00Z"
+        }
+    },
+    {
+        "name": "Trần Thị B",
+        "email": "thib@gmail.com",
+        "password": "$2b$12$X1nsj0yrsZsB0e9O61pKae0zgrGfR470qsnmNGcQljJeqp9ZxS086",
+        "address": "TP.HCM",
+        "phone": "0912345678",
+        "avatar": "https://i.pravatar.cc/150?u=2",
+        "role": "user",
+        "createdAt": {
+            "$date": "2024-04-12T10:05:00Z"
+        }
+    },
+    {
+        "name": "Lê Văn C",
+        "email": "vanc@gmail.com",
+        "password": "$2b$12$X1nsj0yrsZsB0e9O61pKae0zgrGfR470qsnmNGcQljJeqp9ZxS086",
+        "address": "Đà Nẵng",
+        "phone": "0923456789",
+        "avatar": "https://i.pravatar.cc/150?u=3",
+        "role": "user",
+        "createdAt": {
+            "$date": "2024-04-12T10:10:00Z"
+        }
+    },
+    {
+        "name": "Phạm Thị D",
+        "email": "thid@gmail.com",
+        "password": "$2b$12$X1nsj0yrsZsB0e9O61pKae0zgrGfR470qsnmNGcQljJeqp9ZxS086",
+        "address": "Cần Thơ",
+        "phone": "0934567890",
+        "avatar": "https://i.pravatar.cc/150?u=4",
+        "role": "user",
+        "createdAt": {
+            "$date": "2024-04-12T10:15:00Z"
+        }
+    },
+    {
+        "name": "Hoàng Văn E Admin",
+        "email": "admin@shop.com",
+        "password": "$2b$12$X1nsj0yrsZsB0e9O61pKae0zgrGfR470qsnmNGcQljJeqp9ZxS086",
+        "address": "Hải Phòng",
+        "phone": "0945678901",
+        "avatar": "https://i.pravatar.cc/150?img=11",
+        "role": "admin",
+        "createdAt": {
+            "$date": "2024-04-12T10:20:00Z"
+        }
+    }
+]

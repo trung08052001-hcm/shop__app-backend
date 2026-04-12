@@ -9,6 +9,7 @@ const productRoute = require('./modules/product/product.route');
 const orderRoute = require('./modules/order/order.route');
 
 const couponRoute = require('./modules/coupon/coupon.route');
+const reviewRoute = require('./modules/review/review.route');
 const notificationRoute = require('./models/notification/notification.route');
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/products', productRoute);
 app.use('/api/orders', orderRoute);
 app.use('/api/coupons', couponRoute);
+app.use('/api/reviews', reviewRoute);
 
 
 app.use(errorMiddleware);

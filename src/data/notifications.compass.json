@@ -1,0 +1,92 @@
+[
+  {
+    "user": { "$oid": "680113111111111111111111" },
+    "title": "Don hang da duoc tao",
+    "body": "Cam on ban da dat hang. Don hang cua ban dang cho xac nhan.",
+    "type": "order_placed",
+    "orderId": { "$oid": "680223333333333333333331" },
+    "isRead": false,
+    "fcmToken": null
+  },
+  {
+    "user": { "$oid": "680113111111111111111112" },
+    "title": "Don hang dang duoc xu ly",
+    "body": "Shop da tiep nhan don va dang chuan bi hang cho ban.",
+    "type": "order_updated",
+    "orderId": { "$oid": "680223333333333333333332" },
+    "isRead": false,
+    "fcmToken": null
+  },
+  {
+    "user": { "$oid": "680113111111111111111113" },
+    "title": "Khuyen mai cuoi tuan",
+    "body": "Nhap ma WELCOME10 de giam gia cho don hang moi trong tuan nay.",
+    "type": "promotion",
+    "orderId": null,
+    "isRead": false,
+    "fcmToken": null
+  },
+  {
+    "user": { "$oid": "680113111111111111111111" },
+    "title": "Don hang da giao thanh cong",
+    "body": "Don hang cua ban da duoc giao thanh cong. Danh gia san pham ngay nhe.",
+    "type": "order_updated",
+    "orderId": { "$oid": "680223333333333333333333" },
+    "isRead": true,
+    "fcmToken": null
+  },
+  {
+    "user": { "$oid": "680113111111111111111112" },
+    "title": "Uu dai cho thanh vien moi",
+    "body": "Ban nhan duoc coupon NEWUSER25 cho don hang dau tien tren app.",
+    "type": "promotion",
+    "orderId": null,
+    "isRead": false,
+    "fcmToken": null
+  },
+  {
+    "user": { "$oid": "680113111111111111111113" },
+    "title": "Don hang dang van chuyen",
+    "body": "Don hang cua ban da roi kho va dang tren duong giao den ban.",
+    "type": "order_updated",
+    "orderId": { "$oid": "680223333333333333333334" },
+    "isRead": false,
+    "fcmToken": null
+  },
+  {
+    "user": { "$oid": "680113111111111111111111" },
+    "title": "Flash sale phu kien",
+    "body": "AirPods, chuot va ban phim dang duoc giam gia trong 24 gio.",
+    "type": "promotion",
+    "orderId": null,
+    "isRead": false,
+    "fcmToken": null
+  },
+  {
+    "user": { "$oid": "680113111111111111111112" },
+    "title": "Don hang da duoc tao",
+    "body": "He thong da ghi nhan don hang moi cua ban. Vui long theo doi trang thai.",
+    "type": "order_placed",
+    "orderId": { "$oid": "680223333333333333333335" },
+    "isRead": true,
+    "fcmToken": null
+  },
+  {
+    "user": { "$oid": "680113111111111111111113" },
+    "title": "Ma giam gia thang nay",
+    "body": "Su dung ma TECH15 de tiet kiem khi mua laptop va phu kien.",
+    "type": "promotion",
+    "orderId": null,
+    "isRead": false,
+    "fcmToken": null
+  },
+  {
+    "user": { "$oid": "680113111111111111111111" },
+    "title": "Don hang da huy",
+    "body": "Don hang cua ban da duoc huy theo yeu cau. Tien se duoc hoan neu da thanh toan.",
+    "type": "order_updated",
+    "orderId": { "$oid": "680223333333333333333336" },
+    "isRead": true,
+    "fcmToken": null
+  }
+]
