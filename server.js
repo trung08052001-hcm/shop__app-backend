@@ -5,7 +5,14 @@ const connectDB = require('./src/config/db');
 dotenv.config();
 connectDB();
 
+const http = require('http');
+const { initSocket } = require('./src/socket');
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const server = http.createServer(app);
+
+initSocket(server);
+
+server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
