@@ -12,12 +12,16 @@ const couponRoute = require('./modules/coupon/coupon.route');
 const reviewRoute = require('./modules/review/review.route');
 const notificationRoute = require('./models/notification/notification.route');
 const chatRoute = require('./modules/chat/chat.route');
+const recruitmentRoute = require('./modules/recruitment/recruitment.route');
+const adminRoute = require('./modules/admin/admin.route');
+const path = require('path');
 const app = express();
 
 app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/api/notifications', notificationRoute);
 app.use((req, res, next) => {
     console.log('INCOMING:', req.method, req.url);
@@ -30,6 +34,8 @@ app.use('/api/orders', orderRoute);
 app.use('/api/coupons', couponRoute);
 app.use('/api/reviews', reviewRoute);
 app.use('/api/chat', chatRoute);
+app.use('/api/recruitment', recruitmentRoute);
+app.use('/api/admin', adminRoute);
 
 
 app.use(errorMiddleware);
