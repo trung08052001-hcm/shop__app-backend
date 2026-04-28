@@ -50,7 +50,28 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
+const updateProfile = async (req, res, next) => {
+    try {
+        const { address, phone } = req.body;
+        
+        const user = await User.findByIdAndUpdate(
+            req.user._id,
+            { address, phone },
+            { new: true }
+        ).select('-password');
+
+        if (!user) {
+            return res.status(404).json({ message: 'Không tìm thấy người dùng' });
+        }
+
+        res.json(user);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     getAllUsers,
-    deleteUser
+    deleteUser,
+    updateProfile
 };
