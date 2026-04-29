@@ -4,14 +4,14 @@ const User = require('../../models/user.model');
 const register = async (req, res, next) => {
     try {
         const { name, fullName, email, password, address, phone, phoneNumber } = req.body;
-        const { user, token } = await authService.register({
+        const { user, accessToken, refreshToken } = await authService.register({
             name: name ?? fullName,
             email,
             password,
             address,
             phone: phone ?? phoneNumber,
         });
-        res.status(201).json({ user, token });
+        res.status(201).json({ user, token: accessToken, refreshToken });
     } catch (err) {
         next(err);
     }
@@ -20,8 +20,8 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        const { user, token } = await authService.login({ email, password });
-        res.status(200).json({ user, token });
+        const { user, accessToken, refreshToken } = await authService.login({ email, password });
+        res.status(200).json({ user, token: accessToken, refreshToken });
     } catch (err) {
         next(err);
     }
@@ -30,8 +30,18 @@ const login = async (req, res, next) => {
 const googleLogin = async (req, res, next) => {
     try {
         const { idToken } = req.body;
-        const { user, token } = await authService.googleLogin({ idToken });
-        res.status(200).json({ user, token });
+        const { user, accessToken, refreshToken } = await authService.googleLogin({ idToken });
+        res.status(200).json({ user, token: accessToken, refreshToken });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const refreshToken = async (req, res, next) => {
+    try {
+        const { refreshToken } = req.body;
+        const tokens = await authService.refreshTokenService({ refreshToken });
+        res.status(200).json({ token: tokens.accessToken, refreshToken: tokens.refreshToken });
     } catch (err) {
         next(err);
     }
@@ -47,8 +57,32 @@ const getMe = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
     try {
-        const users = await User.find().select('-password').sort({ createdAt: -1 });
-        res.status(200).json(users);
+        const { page = 1, limit = 10, search, role } = req.query;
+        const query = {};
+        
+        if (search) {
+            query.$or = [
+                { name: { $regex: search, $options: 'i' } },
+                { email: { $regex: search, $options: 'i' } }
+            ];
+        }
+        if (role) {
+            query.role = role;
+        }
+
+        const total = await User.countDocuments(query);
+        const users = await User.find(query)
+            .select('-password')
+            .skip((page - 1) * limit)
+            .limit(Number(limit))
+            .sort({ createdAt: -1 });
+            
+        res.status(200).json({
+            users,
+            total,
+            page: Number(page),
+            totalPages: Math.ceil(total / limit)
+        });
     } catch (err) {
         next(err);
     }
@@ -95,4 +129,5 @@ module.exports = {
     getAllUsers,
     updateUserRole,
     updateProfile,
+    refreshToken,
 };

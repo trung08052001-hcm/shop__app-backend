@@ -4,9 +4,13 @@ const admin = require('../../config/firebase');
 const crypto = require('crypto');
 
 const generateToken = (userId) => {
-    return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN,
+    const accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET || 'secret', {
+        expiresIn: process.env.JWT_EXPIRES_IN || '1d',
     });
+    const refreshToken = jwt.sign({ id: userId }, process.env.JWT_REFRESH_SECRET || 'refresh_secret', {
+        expiresIn: '7d',
+    });
+    return { accessToken, refreshToken };
 };
 
 const createHttpError = (statusCode, message) => {
@@ -42,8 +46,8 @@ const register = async ({ name, email, password, address, phone }) => {
         address: normalizedAddress,
         phone: normalizedPhone,
     });
-    const token = generateToken(user._id);
-    return { user, token };
+    const tokens = generateToken(user._id);
+    return { user, accessToken: tokens.accessToken, refreshToken: tokens.refreshToken };
 };
 
 const login = async ({ email, password }) => {
@@ -60,8 +64,8 @@ const login = async ({ email, password }) => {
     const isMatch = await user.comparePassword(normalizedPassword);
     if (!isMatch) throw createHttpError(401, 'Invalid email or password');
 
-    const token = generateToken(user._id);
-    return { user, token };
+    const tokens = generateToken(user._id);
+    return { user, accessToken: tokens.accessToken, refreshToken: tokens.refreshToken };
 };
 
 const googleLogin = async ({ idToken }) => {
@@ -80,8 +84,24 @@ const googleLogin = async ({ idToken }) => {
         });
     }
 
-    const token = generateToken(user._id);
-    return { user, token };
+    const tokens = generateToken(user._id);
+    return { user, accessToken: tokens.accessToken, refreshToken: tokens.refreshToken };
 };
 
-module.exports = { register, login, googleLogin };
+const refreshTokenService = async ({ refreshToken }) => {
+    if (!refreshToken) throw createHttpError(400, 'Refresh token is required');
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET || 'refresh_secret');
+        const user = await User.findById(decoded.id);
+        
+        if (!user) throw createHttpError(401, 'User not found');
+
+        const tokens = generateToken(user._id);
+        return { accessToken: tokens.accessToken, refreshToken: tokens.refreshToken };
+    } catch (err) {
+        throw createHttpError(401, 'Invalid or expired refresh token');
+    }
+};
+
+module.exports = { register, login, googleLogin, refreshTokenService };

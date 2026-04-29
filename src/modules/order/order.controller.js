@@ -29,11 +29,23 @@ const createOrder = async (req, res, next) => {
 
 const getMyOrders = async (req, res, next) => {
     try {
-        const orders = await Order.find({ user: req.user._id })
+        const { page = 1, limit = 10, status } = req.query;
+        const query = { user: req.user._id };
+        if (status) query.status = status;
+        
+        const total = await Order.countDocuments(query);
+        const orders = await Order.find(query)
             .populate('items.product', 'name image price')
+            .skip((page - 1) * limit)
+            .limit(Number(limit))
             .sort({ createdAt: -1 });
 
-        res.json(orders);
+        res.json({
+            orders,
+            total,
+            page: Number(page),
+            totalPages: Math.ceil(total / limit)
+        });
     } catch (err) {
         next(err);
     }
@@ -58,8 +70,15 @@ const getOrderById = async (req, res, next) => {
 const getAllOrders = async (req, res, next) => {
     console.log('getAllOrders called, user:', req.user?._id, 'role:', req.user?.role);
     try {
-        const orders = await Order.find()
+        const { page = 1, limit = 10, status } = req.query;
+        const query = {};
+        if (status) query.status = status;
+        
+        const total = await Order.countDocuments(query);
+        const orders = await Order.find(query)
             .populate('user', 'name email')
+            .skip((page - 1) * limit)
+            .limit(Number(limit))
             .sort({ createdAt: -1 });
 
         console.log('orders found:', orders.length);
@@ -81,7 +100,12 @@ const getAllOrders = async (req, res, next) => {
             shippingAddress: order.shippingAddress,
         }));
 
-        res.json(result);
+        res.json({
+            orders: result,
+            total,
+            page: Number(page),
+            totalPages: Math.ceil(total / limit)
+        });
     } catch (err) {
         console.error('GET ALL ORDERS ERROR:', err.message, err.stack);
         next(err);
